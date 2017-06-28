@@ -13,10 +13,10 @@
         android:layout_height="wrap_content">
         <Button
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="240dp"
             android:drawableBottom="@drawable/building"
             android:textColor="@color/white"
-            android:backgroundTint="#ff5252"
+            android:backgroundTint="#f9a825"
 
             android:textSize="25sp"
             android:padding="20dp"
@@ -33,8 +33,8 @@
             android:textSize="25sp"
             android:padding="10dp"
             android:id="@+id/btn_map"
-            android:backgroundTint="#039be5"
-            android:layout_marginTop="250dp"
+            android:backgroundTint="#5e35b1"
+            android:layout_marginTop="230dp"
             android:background="#ffffff"
             android:gravity="center|bottom"
             android:text="View On Map"/>

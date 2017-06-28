@@ -37,7 +37,7 @@ public class MainMenuActivity extends AppCompatActivity
         btnCat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(),Category2Activity.class);
                 startActivity(intent);
             }
         });
@@ -99,7 +99,7 @@ public class MainMenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_cat) {
-            Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
+            Intent intent = new Intent(getApplicationContext(),Category2Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_map) {
             Intent intent = new Intent(getApplicationContext(),mapActivity.class);

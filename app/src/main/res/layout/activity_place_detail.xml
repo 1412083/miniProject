@@ -200,7 +200,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:src="@drawable/directions"
+        android:src="@drawable/directions2"
+        android:tint="#4d3b3b"
         app:layout_anchor="@id/viewA"
         app:backgroundTint="#ffc107"
         app:layout_anchorGravity="bottom|right|end"/>
