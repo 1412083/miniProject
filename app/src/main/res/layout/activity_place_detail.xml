@@ -1,149 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_place_detail"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context="com.example.khangduyle.miniproject1412083.PlaceDetailActivity">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/header_cover_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/header" />
+    android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/detailImg"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_below="@+id/header_cover_image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-60dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/viewA"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:background="@android:color/holo_purple"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bt1"
+                android:scaleType="centerCrop"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/viewB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:background="#0d8378"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cho Ben Thanh"
+                android:textSize="22sp"
+                android:textColor="@color/white"
+                android:padding="8dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/viewC"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.35"
             android:background="@color/white"
-            android:elevation="5dp"
-            android:padding="20dp"
-            android:scaleType="centerCrop"
-             />
-
-    <RelativeLayout
-        android:id="@+id/profile_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/header_cover_image"
-        android:background="#ebca0707"
-        android:elevation="4dp"
-        android:paddingBottom="24dp">
-        <TextView
-            android:id="@+id/detailStore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="76dp"
-
-            android:textColor="#fff"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
-            android:layout_below="@+id/detailStore"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="10dp">
-            <Button
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/detailCall"
-                android:background="@drawable/call"/>
-
-            <Button
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/detailSend"
-                android:background="@drawable/mail"/>
-
-            <Button
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/detailSurf"
-                android:background="@drawable/web"/>
-        </LinearLayout>
-
-
-    </RelativeLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_layout"
-            android:layout_marginTop="5dp"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="fill_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:id="@+id/detailAdd"
-                 />
+                android:background="#ffffff"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:drawableTop="@drawable/phone"
+                    android:drawableTint="#645959"
+                    android:text="Call"
+                    android:background="#ffffff"
 
-            <TextView
-                android:layout_width="fill_parent"
+                    android:padding="8px"
+                    android:textColor="#7e7f91"
+                    android:id="@+id/btn_direction"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:drawableTop="@drawable/fav"
+                    android:background="#ffffff"
+                    android:text="Favorite"
+                    android:padding="8px"
+                    android:drawableTint="#645959"
+                    android:layout_margin="0dp"
+                    android:textColor="#7e7f91"
+                    android:id="@+id/btn2"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:drawableTop="@drawable/share"
+                    android:text="Share"
+                    android:textColor="#7e7f91"
+                    android:layout_margin="0dp"
+                    android:drawableTint="#645959"
+                    android:padding="8px"
+                    android:background="#ffffff"
+                    android:id="@+id/btnShare"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:drawableTop="@drawable/photo"
+                    android:drawableTint="#645959"
+                    android:text="Images"
+                    android:layout_margin="0dp"
+                    android:padding="8px"
+                    android:textColor="#7e7f91"
+                    android:background="#ffffff"
+                    android:id="@+id/btn_photos"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:id="@+id/detailDesc"
-                />
+                android:padding="10dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="fill_parent"
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/phone2"
+                    android:tint="#0c877c"
+                    android:layout_weight="2"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:id="@+id/tv_call"
+                    android:text="(08) 1900 1088"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:id="@+id/detailPhone" />
+                android:padding="10dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="fill_parent"
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/home"
+                    android:tint="#0c877c"
+                    android:layout_weight="2"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:id="@+id/tvWebsite"
+                    android:text="www.benthanhmarket.com"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:id="@+id/detailEmail" />
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:id="@+id/detailWeb"/>
+                android:padding="10dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/info"
+                    android:tint="#0c877c"
+                    android:layout_weight="2"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:id="@+id/tv_info"
+                    android:text="www.google.com/..."/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/home"
+                    android:tint="#0c877c"
+                    android:layout_weight="2"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:text="5:00 AM - 10:00 PM"/>
+            </LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="All Information"
+                android:textColor="#ffffff"
+                android:padding="2px"
+                android:layout_marginTop="1dp"
+                android:id="@+id/btn_des"
+                android:background="#0d8378"/>
         </LinearLayout>
 
+    </LinearLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/directions"
+        app:layout_anchor="@id/viewA"
+        app:backgroundTint="#ffc107"
+        app:layout_anchorGravity="bottom|right|end"/>
 
-
-    </RelativeLayout>
-
-
-
-</ScrollView>
+</android.support.design.widget.CoordinatorLayout>

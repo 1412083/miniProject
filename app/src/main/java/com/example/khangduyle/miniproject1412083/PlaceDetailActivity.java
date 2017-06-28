@@ -27,12 +27,14 @@ public class PlaceDetailActivity extends AppCompatActivity {
     private ImageView mImg;
     public String phone;
     public String mail;
-    public  String web;
+    public String web;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_detail);
-        Intent intent =getIntent();
+        getSupportActionBar().hide();
+      /*  Intent intent =getIntent();
         Bundle bdl =intent.getExtras();
         init();
 
@@ -113,5 +115,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
         btnSurf = (Button) findViewById(R.id.detailSurf);
         mImg = (ImageView) findViewById(R.id.detailImg);
 
+    }*/
     }
 }
