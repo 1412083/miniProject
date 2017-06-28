@@ -37,7 +37,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.khangduyle.miniproject1412083.MainActivity" />
         </activity>
-        <activity android:name=".CategoryActivity"></activity>
+        <activity android:name=".CategoryActivity" android:label="Categories"></activity>
     </application>
 
 </manifest>

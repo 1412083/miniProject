@@ -13,7 +13,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="#0d8378">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -25,12 +26,18 @@
                     android:id="@+id/edit_text_origin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:padding="6dp"
                     android:hint="Enter origin address" />
 
                 <EditText
                     android:id="@+id/edit_text_destination"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:padding="6dp"
+                    android:textColorHint="@color/white"
                     android:hint="Enter destination address" />
 
             </LinearLayout>
@@ -47,6 +54,9 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:background="#0d8378"
+                android:layout_margin="5dp"
                 android:id="@+id/button_find_path"
                 android:text="Find Path"
                 android:onClick="onClickBtnFindPath"/>
