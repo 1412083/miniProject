@@ -2,14 +2,11 @@ package com.example.khangduyle.miniproject1412083;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import static android.os.Build.VERSION_CODES.M;
 
 /**
  * Created by Administrator on 28/06/2017.

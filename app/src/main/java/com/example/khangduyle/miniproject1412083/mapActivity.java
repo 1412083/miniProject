@@ -2,6 +2,7 @@ package com.example.khangduyle.miniproject1412083;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -85,7 +87,9 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
-    private NavigationView mNav;
+
+    private static final CharSequence[] MAP_TYPE_ITEMS =
+            {"Road Map", "Hybrid", "Satellite", "Terrain"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,45 +102,49 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
         editTextOrigin = (EditText) findViewById(R.id.edit_text_origin);
         editTextDestination = (EditText) findViewById(R.id.edit_text_destination);
 
-        mNav = (NavigationView) findViewById(R.id.nav);
 
 
     }
+    public void onClickBtnTypeMap(View view) {
+        // Prepare the dialog by setting up a Builder.
+        final String fDialogTitle = "Select Map Type";
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(fDialogTitle);
 
-    private void NavBar() {
+        // Find the current map type to pre-check the item representing the current state.
+        int checkItem = mMap.getMapType() - 1;
 
-        mNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Intent goIntent;
-                if (menuItem.isChecked()) menuItem.setChecked(false);
-                else menuItem.setChecked(true);
-                switch (menuItem.getItemId()) {
-                    case R.id.navList:
-                        goIntent = new Intent(mapActivity.this, ListPlaceActivity.class);
-                        startActivity(goIntent);
-                        return true;
-                    case R.id.navadd:
-                        goIntent = new Intent(mapActivity.this, UpLoadPlaceActivity.class);
-                        startActivity(goIntent);
-                        return true;
-                    case R.id.terrain:
-                        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-                        return true;
-                    case R.id.hybrid:
-                        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                        return true;
-                    case R.id.satellite:
-                        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                        return true;
-                    case R.id.navNormal:
-                        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                        return true;
+        // Add an OnClickListener to the dialog, so that the selection will be handled.
+        builder.setSingleChoiceItems(
+                MAP_TYPE_ITEMS,
+                checkItem,
+                new DialogInterface.OnClickListener() {
 
+                    public void onClick(DialogInterface dialog, int item) {
+                        // Locally create a finalised object.
+                        // Perform an action depending on which item was selected.
+                        switch (item) {
+                            case 1:
+                                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                                break;
+                            case 2:
+                                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                                break;
+                            case 3:
+                                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                                break;
+                            default:
+                                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        }
+                        dialog.dismiss();
+                    }
                 }
-                return false;
-            }
-        });
+        );
+
+        // Build the dialog and show it.
+        AlertDialog fMapTypeDialog = builder.create();
+        fMapTypeDialog.setCanceledOnTouchOutside(true);
+        fMapTypeDialog.show();
     }
 
     @Override
@@ -273,19 +281,18 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         // mapWrapperLayout.init(mMap, this);
-        NavBar();
+
 
 
         // Add a marker in Sydney and move the camera
-       /* LatLng hcmus = new LatLng(10.763434, 106.682230);
-        mMap.addMarker(new MarkerOptions().position(hcmus).title("Marker in University of Science HCMC")
+        LatLng hcmus = new LatLng(10.763434, 106.682230);
+        /*mMap.addMarker(new MarkerOptions().position(hcmus).title("Marker in University of Science HCMC")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.pushpin)));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(18),2000,null);
         CameraPosition cameraPosition= new CameraPosition.Builder()
                 .target(hcmus)
                 .zoom(18).bearing(90).tilt(30).build();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(hcmus));*/
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -297,6 +304,16 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
             return;
         }
         mMap.setMyLocationEnabled(true);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(8), 2000, null);
+        // set some feature of map
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(hcmus)      // Sets the center of the map to HCMUS
+                .zoom(8)                   // Sets the zoom (1<= zoom <= 20)
+                                // Sets the orientation of the camera to east
+                .tilt(10)                // Sets the tilt of the camera to 30 degrees
+                .build();
+        // do animation to move to this location
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         setUpClusterer();
 
         mMap.setOnInfoWindowClickListener(mClusterManager);

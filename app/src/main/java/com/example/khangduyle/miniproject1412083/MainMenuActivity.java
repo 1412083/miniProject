@@ -99,7 +99,8 @@ public class MainMenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_cat) {
-
+            Intent intent = new Intent(getApplicationContext(),CategoryActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_map) {
             Intent intent = new Intent(getApplicationContext(),mapActivity.class);
             startActivity(intent);

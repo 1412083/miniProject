@@ -91,6 +91,16 @@
                 android:text="0 km"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Type Map"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="25dp"
+                android:background="#0d8378"
+                android:onClick="onClickBtnTypeMap"/>
 
         </LinearLayout>
 
@@ -104,19 +114,5 @@
 
 
     </LinearLayout>
-    <android.support.design.widget.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/nav"
-        app:menu="@menu/navigation_menu"
-        android:layout_gravity="start"
-        >
-
-
-    </android.support.design.widget.NavigationView>
-
-
-
-
 
 </android.support.v4.widget.DrawerLayout>

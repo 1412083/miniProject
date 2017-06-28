@@ -1,18 +1,15 @@
 package com.example.khangduyle.miniproject1412083;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-
-import static com.example.khangduyle.miniproject1412083.R.id.listView;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -49,9 +46,9 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Trailer trailer = (Trailer) listViewTrailer.getItemAtPosition(position);
-                //Intent intent = new Intent(getApplicationContext(), SubMenuActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ListPlaceActivity.class);
                 //intent.setData(Uri.parse(trailer.getUrl()));
-                //startActivity(intent);
+                startActivity(intent);
             }
         });
     }
