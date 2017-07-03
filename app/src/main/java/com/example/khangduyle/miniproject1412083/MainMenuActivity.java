@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import static com.example.khangduyle.miniproject1412083.R.id.drawer;
+
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -109,6 +111,9 @@ public class MainMenuActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_fav) {
             Intent intent = new Intent(getApplicationContext(),PlaceDetailActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_logout){
+            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
             startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
