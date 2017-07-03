@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //Do something after 100ms
-                Intent intent = new Intent(MainActivity.this,MainMenuActivity.class);
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);
             }
         }, 2500);

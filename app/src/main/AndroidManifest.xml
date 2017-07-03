@@ -40,7 +40,10 @@
         <activity
             android:name=".CategoryActivity"
             android:label="Categories" />
-        <activity android:name=".Category2Activity" android:label="Categories"></activity>
+        <activity
+            android:name=".Category2Activity"
+            android:label="Categories" />
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>
