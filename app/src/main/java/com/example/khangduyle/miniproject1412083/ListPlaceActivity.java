@@ -38,7 +38,7 @@ public class ListPlaceActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Place place=dataSnapshot.getValue(Place.class);
                 Place place;
-                Toast.makeText(ListPlaceActivity.this,"Load data",Toast.LENGTH_LONG).show();
+                Toast.makeText(ListPlaceActivity.this,"Load data",Toast.LENGTH_SHORT).show();
                 for(DataSnapshot mydata:dataSnapshot.getChildren()){
                     place =mydata.getValue(Place.class);
                     arr.add(place);
