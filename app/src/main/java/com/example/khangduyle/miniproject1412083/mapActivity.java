@@ -8,24 +8,19 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,11 +50,7 @@ import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +62,7 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
         ClusterManager.OnClusterClickListener<MyItem>,
         ClusterManager.OnClusterInfoWindowClickListener<MyItem>,
         ClusterManager.OnClusterItemClickListener<MyItem>,
-        ClusterManager.OnClusterItemInfoWindowClickListener<MyItem> {
+        ClusterManager.OnClusterItemInfoWindowClickListener<MyItem>,AdapterView.OnItemSelectedListener {
     private GoogleMap mMap;
     Button btnHybrid;
     Button btnTerrain;
@@ -101,9 +92,61 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
         // mapWrapperLayout = (MapWrapperLayout) findViewById(R.id.map_wrapper);
         editTextOrigin = (EditText) findViewById(R.id.edit_text_origin);
         editTextDestination = (EditText) findViewById(R.id.edit_text_destination);
+        // Spinner element
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+        // Spinner click listener
+        spinner.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("All");
+        categories.add("Market");
+        categories.add("Museum");
+        categories.add("Hotel");
+        categories.add("Restaurant");
+        categories.add("Cinema");
+        categories.add("Bank");
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String cate="";
+                if (position == 0 ) cate="All";
+                if (position == 1 ) cate="Market";
+                if (position == 2 ) cate="Museum";
+                if (position == 3 ) cate="Hotel";
+                if (position == 4 ) cate="Restaurant";
+                if (position == 5 ) cate="Cinema";
+                if (position == 6 ) cate="Bank";
+                loadData(cate);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
+    }
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
 
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
     }
     public void onClickBtnTypeMap(View view) {
         // Prepare the dialog by setting up a Builder.
@@ -150,29 +193,60 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     protected void onStart() {
         super.onStart();
+        loadData("All");
+    }
+
+    public void loadData(String cate){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference().child("Places");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Place place=dataSnapshot.getValue(Place.class);
-                Place place;
-                mClusterManager.clearItems(); // clear to avoid duplicating
+        if (cate.matches("All")) {
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Place place=dataSnapshot.getValue(Place.class);
+                    Place place;
+                    mClusterManager.clearItems(); // clear to avoid duplicating
 
-                Toast.makeText(mapActivity.this, "Read database", Toast.LENGTH_LONG).show();
-                for (DataSnapshot mydata : dataSnapshot.getChildren()) {
-                    place = mydata.getValue(Place.class);
-
-                    MyItem offsetItem = new MyItem(place.mLat, place.mLng, "ahihi", R.drawable.store, place);
-                    mClusterManager.addItem(offsetItem);
+                    Toast.makeText(mapActivity.this, "Read database", Toast.LENGTH_LONG).show();
+                    for (DataSnapshot mydata : dataSnapshot.getChildren()) {
+                        place = mydata.getValue(Place.class);
+                        place.putKey(mydata.getKey());
+                        MyItem offsetItem = new MyItem(place.mLat, place.mLng, "ahihi", R.drawable.marker, place);
+                        mClusterManager.addItem(offsetItem);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }else{
+            ref.orderByChild("mCategory").equalTo(cate).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Place place=dataSnapshot.getValue(Place.class);
+                    Place place;
+                    mClusterManager.clearItems(); // clear to avoid duplicating
+
+                    Toast.makeText(mapActivity.this, "Read database", Toast.LENGTH_LONG).show();
+                    for (DataSnapshot mydata : dataSnapshot.getChildren()) {
+                        place = mydata.getValue(Place.class);
+                        place.putKey(mydata.getKey());
+                        MyItem offsetItem = new MyItem(place.mLat, place.mLng, "ahihi", R.drawable.marker, place);
+                        mClusterManager.addItem(offsetItem);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+
     }
 
     private void sendRequest() {
@@ -309,7 +383,7 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(hcmus)      // Sets the center of the map to HCMUS
                 .zoom(8)                   // Sets the zoom (1<= zoom <= 20)
-                                // Sets the orientation of the camera to east
+                // Sets the orientation of the camera to east
                 .tilt(10)                // Sets the tilt of the camera to 30 degrees
                 .build();
         // do animation to move to this location
@@ -335,12 +409,17 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
                 TextView name= (TextView)convertView.findViewById(R.id.nameLocation);
                 TextView location = (TextView)convertView.findViewById(R.id.location);
                 TextView email = (TextView)convertView.findViewById(R.id.email);
-
+                ImageView avatar = (ImageView)convertView.findViewById(R.id.avatar);
+                String path = person.mPlace.mImg;
+                Picasso.with(getApplicationContext())
+                        .load(path)
+                        .into(avatar);
                 name.setText(person.mPlace.mName); // gán tên địa điểm vào
                 location.setText(person.mPlace.mAdd);
                 email.setText(person.getTitle());
 
-               // mapWrapperLayout.setMarkerWithInfoWindow(marker, convertView);
+
+                // mapWrapperLayout.setMarkerWithInfoWindow(marker, convertView);
                 return convertView;
             }
         });
@@ -384,20 +463,20 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onClusterInfoWindowClick(Cluster<MyItem> cluster) {
-        Toast.makeText(this,"onClusterInfoWindowClick",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"onClusterInfoWindowClick",Toast.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onClusterItemClick(MyItem myItem) {
-        Toast.makeText(this,"onClusterItemClick",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"onClusterItemClick",Toast.LENGTH_LONG).show();
         return false;
     }
 
     @Override
     public void onClusterItemInfoWindowClick(MyItem myItem) {
-        Toast.makeText(this,"onClusterItemInfoWindowClick",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"onClusterItemInfoWindowClick",Toast.LENGTH_LONG).show();
         MyItem person = myItem;
-        Toast.makeText(mapActivity.this,"Ehiihihi",Toast.LENGTH_LONG).show();
+        //Toast.makeText(mapActivity.this,"Ehiihihi",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(mapActivity.this, PlaceDetailActivity.class );// not edit yet
 
         intent.putExtra("phoneNumber",person.mPlace.mNumber);
@@ -407,6 +486,11 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
         intent.putExtra("web",person.mPlace.mWebsite);
         intent.putExtra("Add",person.mPlace.mAdd);
         intent.putExtra("desc",person.mPlace.mDescription);
+        intent.putExtra("Lat",person.mPlace.mLat);
+        intent.putExtra("Lng",person.mPlace.mLng);
+        intent.putExtra("userPost",person.mPlace.mUserPost);
+        intent.putExtra("category",person.mPlace.mCategory);
+        intent.putExtra("key",person.mPlace.mkey);
         startActivity(intent);
     }
 
@@ -486,7 +570,7 @@ public class mapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
     private void setUpClusterer() {
         // Position the map.
-       // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
+        // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)

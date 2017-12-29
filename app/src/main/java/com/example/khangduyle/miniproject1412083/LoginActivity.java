@@ -1,5 +1,6 @@
 package com.example.khangduyle.miniproject1412083;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText edtEmail, edtPassword;
     Button btnLogin;
+    private ProgressDialog mProgress;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -26,11 +28,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
+        mProgress = new ProgressDialog(this);
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null){
-                    startActivity(new Intent(getApplicationContext(),MainMenuActivity.class));
+                    User.getInstance().setName(mAuth.getCurrentUser().getEmail());
+                    User.getInstance().setUid(mAuth.getCurrentUser().getUid());
+                    User.getInstance().initRole(getApplication());
+
                 }
             }
         };
@@ -54,12 +61,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void startSignIn(){
+        mProgress.setMessage("login...");
+        mProgress.show();
         String email = edtEmail.getText().toString();
         String password = edtPassword.getText().toString();
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
             Toast.makeText(getApplicationContext(), "Fields are empty", Toast.LENGTH_SHORT).show();
         }
         else {
+            
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {

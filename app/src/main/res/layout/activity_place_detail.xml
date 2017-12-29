@@ -15,12 +15,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:background="@android:color/holo_purple"
+            android:background="@color/white"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bt1"
+                android:layout_height="match_parent"
+                android:id="@+id/tv_img"
                 android:scaleType="centerCrop"/>
         </LinearLayout>
 
@@ -28,15 +28,15 @@
             android:id="@+id/viewB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.625"
             android:background="#0d8378"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cho Ben Thanh"
                 android:textSize="22sp"
                 android:textColor="@color/white"
+                android:id="@+id/tv_name"
                 android:padding="8dp"/>
 
         </LinearLayout>
@@ -63,7 +63,7 @@
 
                     android:padding="8px"
                     android:textColor="#7e7f91"
-                    android:id="@+id/btn_direction"/>
+                    android:id="@+id/btn_call"/>
                 <Button
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -75,7 +75,7 @@
                     android:drawableTint="#7e7f91"
                     android:layout_margin="0dp"
                     android:textColor="#7e7f91"
-                    android:id="@+id/btn2"/>
+                    android:id="@+id/btn_like"/>
                 <Button
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -88,19 +88,12 @@
                     android:padding="8px"
                     android:background="#ffffff"
                     android:id="@+id/btnShare"/>
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:drawableTop="@drawable/photo"
-                    android:drawableTint="#7e7f91"
-                    android:text="Images"
-                    android:layout_margin="0dp"
-                    android:padding="8px"
-                    android:textColor="#7e7f91"
-                    android:background="#ffffff"
-                    android:id="@+id/btn_photos"/>
+
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#a5d6a7" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,8 +112,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="9"
                     android:id="@+id/tv_call"
-                    android:text="(08) 1900 1088"/>
+                    />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#a5d6a7" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -140,8 +137,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="9"
                     android:id="@+id/tvWebsite"
-                    android:text="www.benthanhmarket.com"/>
+                    />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#a5d6a7" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -152,27 +153,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/info"
-                    android:tint="#0c877c"
-                    android:layout_weight="2"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="9"
-                    android:id="@+id/tv_info"
-                    android:text="www.google.com/..."/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="#ffffff"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/home"
+                    android:src="@drawable/clock"
                     android:tint="#0c877c"
                     android:layout_weight="2"/>
                 <TextView
@@ -181,15 +162,21 @@
                     android:layout_weight="9"
                     android:text="5:00 AM - 10:00 PM"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#a5d6a7" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="All Information"
-                android:textColor="#ffffff"
+                android:textColor="#19490b"
                 android:padding="2px"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="3dp"
                 android:id="@+id/btn_des"
-                android:background="#0d8378"/>
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="#a5d6a7"/>
         </LinearLayout>
 
     </LinearLayout>

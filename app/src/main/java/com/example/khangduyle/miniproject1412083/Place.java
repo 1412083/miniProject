@@ -17,11 +17,17 @@ public class Place {
     public String mUserPost;
     public Double mLat;
     public Double mLng;
+    public String mCategory;
+    public String mkey;
     public Place() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Place(String name,String add,LatLng point, String description, String img,String email,String number,String web) {
+    public void putKey(String key){
+        this.mkey = key;
+    }
+
+    public Place(String name,String add,LatLng point, String description, String img,String email,String number,String web,String category) {
         this.mDescription = description;
         this.mName = name;
         this.mImg= img;
@@ -32,5 +38,10 @@ public class Place {
         this.mEmail=email;
         this.mNumber=number;
         this.mWebsite=web;
+        this.mCategory = category;
+    }
+
+    public void pushUser(String user){
+        this.mUserPost = user;
     }
 }

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -27,23 +28,28 @@
             android:name=".UpLoadPlaceActivity"
             android:label="Add a place" />
         <activity android:name=".PlaceDetailActivity" />
-        <activity android:name=".ListPlaceActivity" />
+        <activity
+            android:name=".ListPlaceActivity"
+            android:label="Places"
+            android:parentActivityName=".Category2Activity" />
         <activity
             android:name=".MainMenuActivity"
             android:label="@string/title_activity_main_menu"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.khangduyle.miniproject1412083.MainActivity" />
-        </activity>
-        <activity
-            android:name=".CategoryActivity"
-            android:label="Categories" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Category2Activity"
-            android:label="Categories" />
-        <activity android:name=".LoginActivity"></activity>
+            android:label="Categories"
+            android:parentActivityName=".MainMenuActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.khangduyle.miniproject1412083.MainMenuActivity" />
+        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".InformationActivity"
+            android:label="Information"
+             />
     </application>
 
 </manifest>

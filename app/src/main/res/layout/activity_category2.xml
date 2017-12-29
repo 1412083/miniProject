@@ -31,6 +31,7 @@
             android:padding="4dp"
             android:drawableTop="@drawable/museum"
             android:background="#cfd8dc"
+            android:id="@+id/btn_museum"
             android:text="Museum"/>
     </LinearLayout>
     <LinearLayout
@@ -45,6 +46,7 @@
             android:drawableTop="@drawable/hotel"
             android:background="#cfd8dc"
             android:padding="4dp"
+            android:id="@+id/btn_hotel"
             android:text="Hotel"/>
         <Button
             android:layout_width="match_parent"
@@ -53,6 +55,7 @@
             android:layout_marginLeft="4dp"
             android:padding="4dp"
             android:drawableTop="@drawable/restaurant2"
+            android:id="@+id/btn_restaurant"
             android:background="#cfd8dc"
             android:text="Restaurant"/>
     </LinearLayout>
@@ -68,6 +71,7 @@
             android:drawableTop="@drawable/cinema"
             android:background="#cfd8dc"
             android:padding="4dp"
+            android:id="@+id/btn_cinema"
             android:text="Cinema"/>
         <Button
             android:layout_width="match_parent"
@@ -76,6 +80,7 @@
             android:layout_marginLeft="4dp"
             android:padding="4dp"
             android:drawableTop="@drawable/bank"
+            android:id="@+id/btn_bank"
             android:background="#cfd8dc"
             android:text="Bank"/>
     </LinearLayout>

@@ -15,20 +15,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import static com.example.khangduyle.miniproject1412083.R.id.drawer;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    FirebaseAuth mAuth;
     Button btnMap, btnCat;
+    TextView userView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //User newUser = User.getInstance();
+        //User.getInstance().initRole();
+        //newUser.helloWorld(getApplicationContext());
+        //newUser.setRole(getApplicationContext());
+        //newUser.getRole(getApplicationContext());
         btnMap = (Button)findViewById(R.id.btn_map);
         btnCat = (Button)findViewById(R.id.btn_cat);
+        User.getInstance().getRole(getApplicationContext());
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,14 +117,33 @@ public class MainMenuActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(),mapActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_add) {
-            Intent intent = new Intent(getApplicationContext(),UpLoadPlaceActivity.class);
-            startActivity(intent);
+            if (User.getInstance().getPermission("Upload",getApplicationContext())){
+                Intent intent = new Intent(getApplicationContext(),UpLoadPlaceActivity.class);
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_fav) {
-            Intent intent = new Intent(getApplicationContext(),PlaceDetailActivity.class);
-            startActivity(intent);
+            if (User.getInstance().getPermission("Likelist",getApplicationContext())){
+                Intent intent = new Intent(getApplicationContext(),ListPlaceActivity.class);
+                intent.putExtra("type","like");
+                startActivity(intent);
+            }
         }else if (id == R.id.nav_logout){
-            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-            startActivity(intent);
+            if (User.getInstance().getPermission("Logout",getApplicationContext())) {
+                User.getInstance().logOut();
+                //Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                //startActivity(intent);
+            }
+        } else if (id == R.id.nav_login){
+            if (User.getInstance().getPermission("Login",getApplicationContext())){
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+            }
+        } else if (id == R.id.nav_my){
+            if (User.getInstance().getPermission("My",getApplicationContext())) {
+                Intent intent = new Intent(getApplicationContext(),ListPlaceActivity.class);
+                intent.putExtra("type","My");
+                startActivity(intent);
+            }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

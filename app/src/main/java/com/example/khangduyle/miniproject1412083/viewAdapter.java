@@ -67,9 +67,9 @@ public class viewAdapter extends BaseAdapter {
                 .load(path)
                 .into(img);
         String a;
-        name.setText("Name: " + mContact.get(position).mName);
-        add.setText("Address: " + mContact.get(position).mAdd);
-        desc.setText("Description: "+mContact.get(position).mDescription);
+        name.setText(mContact.get(position).mName);
+        add.setText(mContact.get(position).mAdd);
+        desc.setText(mContact.get(position).mDescription);
         user.setText(mContact.get(position).mUserPost);
 
         return view;

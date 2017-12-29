@@ -10,9 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.khangduyle.miniproject1412083.ModuleDirection.DirectionFinder;
@@ -21,6 +24,8 @@ import com.example.khangduyle.miniproject1412083.ModuleDirection.LocationFinderL
 import com.example.khangduyle.miniproject1412083.ModuleDirection.Route;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -29,6 +34,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -48,7 +54,11 @@ public class UpLoadPlaceActivity extends AppCompatActivity implements LocationFi
     private static final int MAX_LENGTH=10;
     private ProgressDialog mProgress;
     private int mCheck;
+    private  Spinner spinner;
     private Point curPoint;
+    private String cate="Market";
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +133,25 @@ public class UpLoadPlaceActivity extends AppCompatActivity implements LocationFi
         mEdtPhone = (EditText) findViewById(R.id.edtphone);
         mEdtWeb = (EditText) findViewById(R.id.edtweb);
         mProgress = new ProgressDialog(this);
+        // Spinner element
+        spinner = (Spinner) findViewById(R.id.edtspinner);
+        List<String> categories = new ArrayList<String>();
+
+        categories.add("Market");
+        categories.add("Museum");
+        categories.add("Hotel");
+        categories.add("Restaurant");
+        categories.add("Cinema");
+        categories.add("Bank");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
 
     }
 
@@ -173,16 +202,37 @@ public class UpLoadPlaceActivity extends AppCompatActivity implements LocationFi
 
     @Override
     public void onLoctionFinderSuccess(Point point) {
+
         mProgress.dismiss();
         if (point!=null){
             mCheck=2;
             curPoint=point;
+            mAuth = FirebaseAuth.getInstance();
+            currentUser = mAuth.getCurrentUser();
+
             Toast.makeText(this,curPoint.getAdd(),Toast.LENGTH_LONG).show();
             final String name= mEdtName.getText().toString().trim();
             final String descript= mEdtDecript.getText().toString().trim();
             final String phone = mEdtPhone.getText().toString().trim();
             final String email = mEdtEmail.getText().toString().trim();
             final String website = mEdtWeb.getText().toString().trim();
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (position == 0 ) cate="Market";
+                    if (position == 1 ) cate="Museum";
+                    if (position == 2 ) cate="Hotel";
+                    if (position == 3 ) cate="Restaurant";
+                    if (position == 4 ) cate="Cinema";
+                    if (position == 5 ) cate="Bank";
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
             if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(descript) && uri!=null){
 
                 StorageReference filepath=mStorage.child("Photos").child("Places").child(uri.getLastPathSegment());
@@ -192,7 +242,8 @@ public class UpLoadPlaceActivity extends AppCompatActivity implements LocationFi
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Uri downloadUri=taskSnapshot.getDownloadUrl();
 
-                        Place newOne= new Place(name,curPoint.getAdd(),curPoint.getPoint(),descript,downloadUri.toString(),email,phone,website);
+                        Place newOne= new Place(name,curPoint.getAdd(),curPoint.getPoint(),descript,downloadUri.toString(),email,phone,website,cate);
+                        newOne.pushUser(User.getInstance().getName());
                         String key=random();
                         mDatabase.child("Places").child(key).setValue(newOne);
                         Toast.makeText(UpLoadPlaceActivity.this,"Upload success! ",Toast.LENGTH_LONG).show();

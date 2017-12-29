@@ -1,5 +1,6 @@
 package com.example.khangduyle.miniproject1412083;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -35,7 +36,11 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                if(User.getInstance().getUid()==""){
+                    User.getInstance().setName("Guest");
+                    User.getInstance().setUid("");
+                }
+                Intent intent = new Intent(getApplicationContext(),MainMenuActivity.class);
                 startActivity(intent);
             }
         });
